@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.example.movieapp.model.Movie
 
-class MovieAdapter(var movies : List<Movie>):RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+class MovieAdapter(var movies : MutableList<Movie>):RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_movie,parent,false)
@@ -27,9 +27,15 @@ class MovieAdapter(var movies : List<Movie>):RecyclerView.Adapter<MovieAdapter.M
 
     }
 
-    fun updateMovies(movies: List<Movie>){
+    fun updateMovies(movies: MutableList<Movie>){
         this.movies = movies
         notifyDataSetChanged()
+    }
+
+    fun appendMovies(movies: List<Movie>){
+        this.movies.addAll(movies)
+        notifyItemRangeInserted(this.movies.size,movies.size-1)
+
     }
 
     inner class MovieViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
