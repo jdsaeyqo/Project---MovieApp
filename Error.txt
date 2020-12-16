@@ -1,0 +1,7 @@
+no static method metafactory 에러  :  자바 호환 문제
+해결) 앱 그래들에서 추가
+android {
+compileOptions{
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
