@@ -5,3 +5,6 @@ compileOptions{
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+Error inflating class com.google.android.youtube.player.YouTubePlayerView 에러 :
+실행 시키려는 액티비티 : YoutubeBaseActivity 구현해야함
