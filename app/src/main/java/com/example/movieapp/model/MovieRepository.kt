@@ -1,8 +1,5 @@
-package com.example.movieapp
+package com.example.movieapp.model
 
-import com.example.movieapp.model.GetMoviesResponse
-import com.example.movieapp.model.Movie
-import com.example.movieapp.model.MovieAPI
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

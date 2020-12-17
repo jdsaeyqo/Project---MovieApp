@@ -1,25 +1,16 @@
 package com.example.movieapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.movieapp.MovieRepository.getPopularMovies
-import com.example.movieapp.model.GetMoviesResponse
 import com.example.movieapp.model.Movie
-import com.example.movieapp.model.MovieAPI
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.example.movieapp.model.MovieRepository
 
 class MainActivity : AppCompatActivity() {
 
-
-    private lateinit var MovieLayoutMgr: LinearLayoutManager
 
     private lateinit var popular_recycler: RecyclerView
     private lateinit var popularmovieadapter: MovieAdapter
@@ -45,19 +36,19 @@ class MainActivity : AppCompatActivity() {
         popularMoviesLayoutMgr = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         popular_recycler = findViewById(R.id.recycle_popular)
         popular_recycler.layoutManager = popularMoviesLayoutMgr
-        popularmovieadapter = MovieAdapter(mutableListOf())
+        popularmovieadapter = MovieAdapter(mutableListOf()){ movie -> showMovieDetails(movie)}
         popular_recycler.adapter = popularmovieadapter
 
         topRatedMoviesLayoutMgr = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         topRated_recycler = findViewById(R.id.recycle_top_rated)
         topRated_recycler.layoutManager = topRatedMoviesLayoutMgr
-        topRatedMoviesAdapter = MovieAdapter(mutableListOf())
+        topRatedMoviesAdapter = MovieAdapter(mutableListOf()){ movie -> showMovieDetails(movie)}
         topRated_recycler.adapter = topRatedMoviesAdapter
 
         upComingMoviesLayoutMgr = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         upComing_recycler = findViewById(R.id.recycle_upcoming)
         upComing_recycler.layoutManager = upComingMoviesLayoutMgr
-        upComingMoviesAdapter = MovieAdapter(mutableListOf())
+        upComingMoviesAdapter = MovieAdapter(mutableListOf()){ movie -> showMovieDetails(movie)}
         upComing_recycler.adapter = upComingMoviesAdapter
 
         getPopularMovies()
@@ -65,6 +56,17 @@ class MainActivity : AppCompatActivity() {
         getUpcomingMovies()
 
 
+    }
+
+    private fun showMovieDetails(movie: Movie) {
+        val intent = Intent(this, MovieDetail::class.java)
+        intent.putExtra(MOVIE_BACKDROP, movie.backdropPath)
+        intent.putExtra(MOVIE_POSTER, movie.posterPath)
+        intent.putExtra(MOVIE_TITLE, movie.title)
+        intent.putExtra(MOVIE_RATING, movie.rating)
+        intent.putExtra(MOVIE_RELEASE_DATE, movie.releaseDate)
+        intent.putExtra(MOVIE_OVERVIEW, movie.overview)
+        startActivity(intent)
     }
 
     private fun getUpcomingMovies() {
