@@ -27,11 +27,6 @@ class MovieAdapter(var movies : MutableList<Movie>):RecyclerView.Adapter<MovieAd
 
     }
 
-    fun updateMovies(movies: MutableList<Movie>){
-        this.movies = movies
-        notifyDataSetChanged()
-    }
-
     fun appendMovies(movies: List<Movie>){
         this.movies.addAll(movies)
         notifyItemRangeInserted(this.movies.size,movies.size-1)
