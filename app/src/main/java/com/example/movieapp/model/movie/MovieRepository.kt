@@ -1,4 +1,4 @@
-package com.example.movieapp.model
+package com.example.movieapp.model.movie
 
 import android.util.Log
 import retrofit2.Call
@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object MovieRepository {
 
     private var api_movie: MovieAPI? = null
-    private var api_video: VideoAPI? = null
+    var api_video: VideoAPI? = null
 
     init {
         val retrofit = Retrofit.Builder()
@@ -111,13 +111,7 @@ object MovieRepository {
         onSuccess: (videos : List<Video>) -> Unit,
         onError: () -> Unit
     ) {
-//        val movieID = movie_id
-//        val retrofit = Retrofit.Builder()
-//            .baseUrl("https://api.themoviedb.org/3/")
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .build()
-//
-//        val service = retrofit.create(VideoAp::class.java)
+
         api_video?.getVideoTrailer(movieID = movie_id)!!
             .enqueue(object : Callback<GetVideoResponse> {
             override fun onResponse(call: Call<GetVideoResponse>, response: Response<GetVideoResponse>) {

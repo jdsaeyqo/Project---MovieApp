@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">무슨 영화 볼까?</string>
+    <string name="app_name">오늘 뭐 볼까?</string>
     <string name="popular">인기 작품</string>
     <string name="most_popular_movies">가장 인기있는 작품들</string>
     <string name="error_fetch_movies">Please check your internet connection</string>
@@ -7,4 +7,9 @@
     <string name="highest_rated_movies">가장 평점이 높은 작품들</string>
     <string name="upcoming">개봉 예정</string>
     <string name="stay_updated">개봉 준비중인 작품들</string>
+    <string name="on_air">방영 중</string>
+    <string name="on_air_state">현재 방영 중인 작품들</string>
+    <string name="nav_movie">영화</string>
+    <string name="nav_tvshow">TV 프로그램</string>
+
 </resources>

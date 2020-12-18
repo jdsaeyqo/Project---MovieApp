@@ -1,4 +1,5 @@
-package com.example.movieapp.model
+package com.example.movieapp.model.movie
+
 
 import retrofit2.Call
 import retrofit2.http.GET
@@ -19,7 +20,7 @@ interface MovieAPI {
     fun getTopRatedMovies(
         @Query("api_key") apiKey :String = "ee2b86b7b047fd828cc1c8353abb6114" ,
         @Query("page") page : Int,
-        @Query("language") language : String = "ko-en"
+        @Query("language") language : String = "ko"
 
     ): Call<GetMoviesResponse>
 
@@ -27,7 +28,7 @@ interface MovieAPI {
     fun getUpcomingMovies(
         @Query("api_key") apiKey :String = "ee2b86b7b047fd828cc1c8353abb6114" ,
         @Query("page") page : Int,
-        @Query("language") language : String = "ko-en"
+        @Query("language") language : String = "ko"
 
     ): Call<GetMoviesResponse>
 
