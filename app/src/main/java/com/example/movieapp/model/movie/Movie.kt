@@ -3,9 +3,9 @@ package com.example.movieapp.model.movie
 import com.google.gson.annotations.SerializedName
 
 data class Movie(
-    @SerializedName("id") val id: Long,
-    @SerializedName("title") val title: String,
-    @SerializedName("overview") val overview: String,
+    val id: Long,
+    val title: String,
+    val overview: String,
     @SerializedName("poster_path") val posterPath: String,
     @SerializedName("backdrop_path") val backdropPath: String,
     @SerializedName("vote_average") val rating: Float,
@@ -13,7 +13,7 @@ data class Movie(
 )
 
 data class GetMoviesResponse(
-    @SerializedName("page") val page: Int,
+    val page: Int,
     @SerializedName("results") val movies: MutableList<Movie>,
     @SerializedName("total_pages") val pages: Int
 )
@@ -27,6 +27,6 @@ data class Video(
 
 
 data class GetVideoResponse(
-    @SerializedName("id") val id: Int,
+    val id: Int,
     @SerializedName("results") val videos: List<Video>
 )
