@@ -28,7 +28,7 @@ object TvShowRepository {
         onSuccess: (tvshows: MutableList<TvShow>) -> Unit,
         onError: () -> Unit
     ) {
-        TvShowRepository.api_tvshow?.getPopularTvShows(page = page)!!
+        api_tvshow?.getPopularTvShows(page = page)!!
             .enqueue(object :Callback<GetTvShowResponse> {
                 override fun onResponse(
                     call: Call<GetTvShowResponse>,
@@ -55,7 +55,7 @@ object TvShowRepository {
         onSuccess: (tvshows: MutableList<TvShow>) -> Unit,
         onError: () -> Unit
     ) {
-        TvShowRepository.api_tvshow?.getTopRatedTvShows(page = page)!!
+        api_tvshow?.getTopRatedTvShows(page = page)!!
             .enqueue(object : Callback<GetTvShowResponse> {
                 override fun onResponse(
                     call: Call<GetTvShowResponse>,
@@ -82,7 +82,7 @@ object TvShowRepository {
         onSuccess: (tvshows: MutableList<TvShow>) -> Unit,
         onError: () -> Unit
     ) {
-        TvShowRepository.api_tvshow?.getOnAirTvShows(page = page)!!
+        api_tvshow?.getOnAirTvShows(page = page)!!
             .enqueue(object : Callback<GetTvShowResponse> {
                 override fun onResponse(
                     call: Call<GetTvShowResponse>,
@@ -111,7 +111,7 @@ object TvShowRepository {
         onError: () -> Unit
     ) {
 
-        TvShowRepository.api_video?.getVideoTrailer(TvShowID = tvshow_id)!!
+        api_video?.getVideoTrailer(TvShowID = tvshow_id)!!
             .enqueue(object : Callback<GetVideoResponse> {
                 override fun onResponse(call: Call<GetVideoResponse>, response: Response<GetVideoResponse>) {
                     if(response.isSuccessful) {
