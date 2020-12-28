@@ -9,19 +9,18 @@
 예고편 있을 시 예고편 제공
 ---
 # 개요
-![image1](https://github.com/jdsaeyqo/Project---MovieApp/blob/master/app/src/main/res/drawable/_movieapp_image1.jpg)
-
-
-![image2](https://github.com/jdsaeyqo/Project---MovieApp/blob/master/app/src/main/res/drawable/_movieapp_image2.jpg)  
+영화 | TV 프로그램
+:------:|:-------:
+![image1](https://github.com/jdsaeyqo/Project---MovieApp/blob/master/app/src/main/res/drawable/_movieapp_image1.jpg)|![image2](https://github.com/jdsaeyqo/Project---MovieApp/blob/master/app/src/main/res/drawable/_movieapp_image2.jpg)  
 
 - RecyclerView
 - Retrofit 사용하여 TMDb API 활용
 - 영화 : 인기 순, 평점 순, 개봉 예정 작품  
 - TV프로그램 : 인기 순, 평점 순, 현재 방영중인 작품
 
-![image3](https://github.com/jdsaeyqo/Project---MovieApp/blob/master/app/src/main/res/drawable/_movieapp_image3.jpg)  
-
-![image4](https://github.com/jdsaeyqo/Project---MovieApp/blob/master/app/src/main/res/drawable/_movieapp_image4.jpg)
+영화 | TV 프로그램
+:------:|:-------:
+![image3](https://github.com/jdsaeyqo/Project---MovieApp/blob/master/app/src/main/res/drawable/_movieapp_image3.jpg)|![image4](https://github.com/jdsaeyqo/Project---MovieApp/blob/master/app/src/main/res/drawable/_movieapp_image4.jpg)
 
 - 작품 클릭 시 영화에 대한 소개와 포스터그림 제공  
 - YouTubePlayer API 활용하여 예고편 있을 시 포스터 그림 대신 예고편 제공
