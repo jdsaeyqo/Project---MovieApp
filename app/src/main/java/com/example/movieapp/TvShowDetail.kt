@@ -83,7 +83,8 @@ class TvShowDetail : YouTubeBaseActivity(),YouTubePlayer.OnInitializedListener {
     private fun onVideosFetched(video: List<Video>) {
         VIDEO_ID = video[0].video_key
         tvshow_backdrop.visibility = View.GONE
-        yt_tvshow_player.initialize("AIzaSyDv9TGwK-FdSNMxp0u_Fh2FSekpk8Ukwlg",this)
+
+        yt_tvshow_player.initialize("AIzaSyD6krj8VZgysv89-hLmGKSa8s_haSYcxAg",this)
 
     }
     private fun onError(){

@@ -9,10 +9,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(),BottomNavigationView.OnNavigationItemSelectedListener {
+
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         when(item.itemId){
             R.id.item_movie ->{
+
                 var movieFragment =
                     MovieFragment()
                 supportFragmentManager.beginTransaction().replace(R.id.main_content,movieFragment).commit()
@@ -35,6 +38,7 @@ class MainActivity : AppCompatActivity(),BottomNavigationView.OnNavigationItemSe
         bottom_nav.setOnNavigationItemSelectedListener(this)
 
         bottom_nav.selectedItemId = R.id.item_movie
+
 
     }
 

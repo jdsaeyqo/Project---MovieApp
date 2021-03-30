@@ -8,3 +8,14 @@ compileOptions{
 
 Error inflating class com.google.android.youtube.player.YouTubePlayerView 에러 :
 실행 시키려는 액티비티 : YoutubeBaseActivity 구현해야함
+
+TargetSDK 30 일 때 유튜브 플레이어 실행 안되는 오류 발생
+이유는 30은 다른 어플리케이션 접근 제한되어있음
+Menifest파일에 
+ <queries>
+        <intent>
+            <action android:name="com.google.android.youtube.api.service.START" />
+        </intent>
+    </queries>
+
+추가하면 해결

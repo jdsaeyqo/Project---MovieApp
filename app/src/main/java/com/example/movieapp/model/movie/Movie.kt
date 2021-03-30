@@ -3,6 +3,7 @@ package com.example.movieapp.model.movie
 import com.google.gson.annotations.SerializedName
 
 data class Movie(
+
     val id: Long,
     val title: String,
     val overview: String,

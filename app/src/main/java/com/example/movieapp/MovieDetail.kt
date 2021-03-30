@@ -1,5 +1,6 @@
 package com.example.movieapp
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -52,6 +53,9 @@ class MovieDetail : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener {
         }else{
             finish()
         }
+
+
+
     }
 
     private fun populateDetails(extras: Bundle) {
@@ -79,7 +83,11 @@ class MovieDetail : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener {
     private fun onVideosFetched(video:List<Video>){
         VIDEO_ID = video[0].video_key
         movie_backdrop.visibility = View.GONE
-        yt_player.initialize("AIzaSyDv9TGwK-FdSNMxp0u_Fh2FSekpk8Ukwlg",this)
+
+
+       yt_player.initialize("AIzaSyD6krj8VZgysv89-hLmGKSa8s_haSYcxAg",this)
+
+
 
 
     }
