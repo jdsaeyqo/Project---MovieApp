@@ -23,10 +23,22 @@
 ![image3](https://github.com/jdsaeyqo/Project---MovieApp/blob/master/app/src/main/res/drawable/_movieapp_image3.jpg)|![image4](https://github.com/jdsaeyqo/Project---MovieApp/blob/master/app/src/main/res/drawable/_movieapp_image4.jpg)
 
 - 작품 클릭 시 영화에 대한 소개와 포스터그림 제공  
-- YouTubePlayer API 활용하여 예고편 있을 시 포스터 그림 대신 예고편 제공   
+- YouTubePlayer API 활용하여 예고편 있을 시 포스터 그림 대신 예고편 제공
+- 안드로이드 11 버전 패키지 공개상태 이슈에 따라 Manifest파일에 유튜브 서비스 추가
 
 
 ---
+
+# Manifest
+~~~kotlin
+<queries>
+        <intent>
+            <action android:name="com.google.android.youtube.api.service.START" />
+        </intent>
+    </queries>
+~~~
+
+
 # Library
 ~~~kotlin  
  //retrofit
@@ -41,4 +53,8 @@
 // glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
+// youtube player
+    implementation files('libs/YouTubeAndroidPlayerApi.jar')
+    implementation fileTree(dir: "libs", include: ["*.jar"])
 ~~~
