@@ -10,83 +10,75 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.*
+import com.example.movieapp.databinding.FragMovieBinding
 import com.example.movieapp.model.movie.Movie
 import com.example.movieapp.model.movie.MovieAdapter
 import com.example.movieapp.model.movie.MovieRepository
-import kotlinx.android.synthetic.main.frag_movie.view.*
 
-class MovieFragment :Fragment(){
+class MovieFragment : Fragment() {
 
-    private lateinit var popular_recycler: RecyclerView
-    private lateinit var popularmovieadapter: MovieAdapter
-    lateinit var popularMoviesLayoutMgr: LinearLayoutManager
+    private var _binding: FragMovieBinding? = null
+    private val binding get() = _binding!!
+
     private var popularMoviesPage = 1
-
-    private lateinit var topRated_recycler: RecyclerView
-    private lateinit var topRatedMoviesAdapter: MovieAdapter
-    private lateinit var topRatedMoviesLayoutMgr: LinearLayoutManager
     private var topRatedMoviesPage = 1
-
-    private lateinit var upComing_recycler: RecyclerView
-    private lateinit var upComingMoviesAdapter: MovieAdapter
-    private lateinit var upComingMoviesLayoutMgr: LinearLayoutManager
     private var upComingMoviesPage = 1
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
-        val view = LayoutInflater.from(activity).inflate(R.layout.frag_movie, container, false)
+        _binding = FragMovieBinding.inflate(inflater, container, false)
 
-        popular_recycler=view.recycle_popular
-        popularMoviesLayoutMgr = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        popularmovieadapter =
-            MovieAdapter(mutableListOf()) { movie ->
-                showMovieDetails(movie)
-            }
-        popular_recycler.layoutManager = popularMoviesLayoutMgr
-        popular_recycler.adapter = popularmovieadapter
-
-        topRated_recycler=view.recycle_top_rated
-        topRatedMoviesLayoutMgr = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        topRatedMoviesAdapter =
-            MovieAdapter(mutableListOf()) { movie ->
-                showMovieDetails(movie)
-            }
-        topRated_recycler.layoutManager = topRatedMoviesLayoutMgr
-        topRated_recycler.adapter = topRatedMoviesAdapter
-
-        upComing_recycler=view.recycle_upcoming
-        upComingMoviesLayoutMgr = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        upComingMoviesAdapter =
-            MovieAdapter(mutableListOf()) { movie ->
-                showMovieDetails(movie)
-            }
-        upComing_recycler.layoutManager = upComingMoviesLayoutMgr
-        upComing_recycler.adapter = upComingMoviesAdapter
+        initRecyclerView()
 
         getPopularMovies()
         getTopRatedMovies()
         getUpcomingMovies()
 
-        return view
+        return binding.root
 
     }
 
-        private fun showMovieDetails(movie: Movie) {
-            val intent = Intent(activity!!, MovieDetail::class.java)
-            intent.putExtra(MOVIE_BACKDROP, movie.backdropPath)
-            intent.putExtra(MOVIE_POSTER, movie.posterPath)
-            intent.putExtra(MOVIE_TITLE, movie.title)
-            intent.putExtra(MOVIE_RATING, movie.rating)
-            intent.putExtra(MOVIE_RELEASE_DATE, movie.releaseDate)
-            intent.putExtra(MOVIE_OVERVIEW, movie.overview)
-            intent.putExtra(MOVIE_ID,movie.id)
+    private fun initRecyclerView() = with(binding) {
 
-            startActivity(intent)
+        recyclePopular.apply {
+            adapter = MovieAdapter(mutableListOf()) { movie ->
+                showMovieDetails(movie)
+            }
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         }
+
+        recycleTopRated.apply {
+            adapter = MovieAdapter(mutableListOf()) { movie ->
+                showMovieDetails(movie)
+            }
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        }
+
+        recycleUpcoming.apply {
+            adapter = MovieAdapter(mutableListOf()) { movie ->
+                showMovieDetails(movie)
+            }
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        }
+
+    }
+
+    private fun showMovieDetails(movie: Movie) {
+        val intent = Intent(requireActivity(), MovieDetail::class.java)
+        intent.putExtra(MOVIE_BACKDROP, movie.backdropPath)
+        intent.putExtra(MOVIE_POSTER, movie.posterPath)
+        intent.putExtra(MOVIE_TITLE, movie.title)
+        intent.putExtra(MOVIE_RATING, movie.rating)
+        intent.putExtra(MOVIE_RELEASE_DATE, movie.releaseDate)
+        intent.putExtra(MOVIE_OVERVIEW, movie.overview)
+        intent.putExtra(MOVIE_ID, movie.id)
+
+        startActivity(intent)
+    }
 
     private fun getUpcomingMovies() {
         MovieRepository.getUpcomingMovies(
@@ -114,72 +106,83 @@ class MovieFragment :Fragment(){
             ::onError
         )
     }
+
     private fun attachPopularMoviesOnScrollListener() {
-    popular_recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            val totalItemCount = popularMoviesLayoutMgr.itemCount
-            val visibleItemCount = popularMoviesLayoutMgr.childCount
-            val firstVisibleItem = popularMoviesLayoutMgr.findFirstVisibleItemPosition()
+        binding.recyclePopular.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val totalItemCount = binding.recyclePopular.layoutManager?.itemCount
+                val visibleItemCount = binding.recyclePopular.layoutManager?.childCount
+                val firstVisibleItem =
+                    (binding.recyclePopular.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
 
-            if (firstVisibleItem + visibleItemCount == totalItemCount) {
-                recyclerView.removeOnScrollListener(this)
-                popularMoviesPage++
-                getPopularMovies()
+                if (firstVisibleItem + visibleItemCount!! == totalItemCount) {
+                    recyclerView.removeOnScrollListener(this)
+                    popularMoviesPage++
+                    getPopularMovies()
+                }
             }
-        }
-    })
-}
+        })
+    }
 
 
-private fun attachTopRatedMoviesOnScrollListener() {
-    topRated_recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            val totalItemCount = topRatedMoviesLayoutMgr.itemCount
-            val visibleItemCount = topRatedMoviesLayoutMgr.childCount
-            val firstVisibleItem = topRatedMoviesLayoutMgr.findFirstVisibleItemPosition()
+    private fun attachTopRatedMoviesOnScrollListener() {
+        binding.recycleTopRated.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val totalItemCount = binding.recycleTopRated.layoutManager?.itemCount
+                val visibleItemCount = binding.recycleTopRated.layoutManager?.childCount
+                val firstVisibleItem =
+                    (binding.recycleTopRated.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
 
-            if (firstVisibleItem + visibleItemCount == totalItemCount) {
-                recyclerView.removeOnScrollListener(this)
-                topRatedMoviesPage++
-                getTopRatedMovies()
+
+                if (firstVisibleItem + visibleItemCount!! == totalItemCount) {
+                    recyclerView.removeOnScrollListener(this)
+                    topRatedMoviesPage++
+                    getTopRatedMovies()
+                }
             }
-        }
-    })
-}
+        })
+    }
 
-private fun attachUpComingMoviesOnScrollListener() {
-    upComing_recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            val totalItemCount = upComingMoviesLayoutMgr.itemCount
-            val visibleItemCount = upComingMoviesLayoutMgr.childCount
-            val firstVisibleItem = upComingMoviesLayoutMgr.findFirstVisibleItemPosition()
+    private fun attachUpComingMoviesOnScrollListener() {
+        binding.recycleUpcoming.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val totalItemCount = binding.recycleUpcoming.layoutManager?.itemCount
+                val visibleItemCount = binding.recycleUpcoming.layoutManager?.childCount
+                val firstVisibleItem =
+                    (binding.recycleUpcoming.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
 
-            if (firstVisibleItem + visibleItemCount == totalItemCount) {
-                recyclerView.removeOnScrollListener(this)
-                upComingMoviesPage++
-                getUpcomingMovies()
+
+                if (firstVisibleItem + visibleItemCount!! == totalItemCount) {
+                    recyclerView.removeOnScrollListener(this)
+                    upComingMoviesPage++
+                    getUpcomingMovies()
+                }
             }
-        }
-    })
-}
+        })
+    }
 
 
     private fun onPopularMoviesFetched(movies: MutableList<Movie>) {
-        popularmovieadapter.appendMovies(movies)
+        (binding.recyclePopular.adapter as MovieAdapter).appendMovies(movies)
         attachPopularMoviesOnScrollListener()
     }
 
     private fun onTopRatedMoviesFetched(movies: MutableList<Movie>) {
-        topRatedMoviesAdapter.appendMovies(movies)
+        (binding.recycleTopRated.adapter as MovieAdapter).appendMovies(movies)
         attachTopRatedMoviesOnScrollListener()
     }
 
     private fun onUpComingMoviesFetched(movies: MutableList<Movie>) {
-        upComingMoviesAdapter.appendMovies(movies)
+        (binding.recycleUpcoming.adapter as MovieAdapter).appendMovies(movies)
         attachUpComingMoviesOnScrollListener()
     }
 
     private fun onError() {
         Toast.makeText(activity, getString(R.string.error_fetch_movies), Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
