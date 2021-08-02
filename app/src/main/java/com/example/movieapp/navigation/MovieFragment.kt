@@ -37,7 +37,6 @@ class MovieFragment :Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         val view = LayoutInflater.from(activity).inflate(R.layout.frag_movie, container, false)
 
         popular_recycler=view.recycle_popular
