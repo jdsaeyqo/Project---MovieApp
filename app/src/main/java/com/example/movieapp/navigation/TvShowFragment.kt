@@ -10,91 +10,78 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.*
+import com.example.movieapp.databinding.FragTvshowBinding
 import com.example.movieapp.model.tvshow.TvShow
 import com.example.movieapp.model.tvshow.TvShowAdapter
 import com.example.movieapp.model.tvshow.TvShowRepository
-import kotlinx.android.synthetic.main.frag_tvshow.view.*
 
-class TvShowFragment: Fragment() {
+class TvShowFragment : Fragment() {
 
-    private lateinit var popular_recycler: RecyclerView
-    private lateinit var populartvshowadapter: TvShowAdapter
-    lateinit var populartvshowLayoutMgr: LinearLayoutManager
+    private var _binding: FragTvshowBinding? = null
+    private val binding get() = _binding!!
+
     private var populartvshowPage = 1
-
-    private lateinit var topRated_recycler: RecyclerView
-    private lateinit var topRatedtvshowAdapter: TvShowAdapter
-    private lateinit var topRatedtvshowLayoutMgr: LinearLayoutManager
     private var topRatedtvshowPage = 1
-
-    private lateinit var onAir_recycler: RecyclerView
-    private lateinit var onAirtvshowAdapter: TvShowAdapter
-    private lateinit var onAirtvshowLayoutMgr: LinearLayoutManager
     private var onAirtvshowPage = 1
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = LayoutInflater.from(activity).inflate(R.layout.frag_tvshow, container, false)
+    ): View {
 
-        popular_recycler = view.recycle_popular_tvshow
-        populartvshowLayoutMgr =
-            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        populartvshowadapter = TvShowAdapter(mutableListOf()) { tvshow ->
-            showTvShowDetails(tvshow)
-        }
-        popular_recycler.layoutManager = populartvshowLayoutMgr
-        popular_recycler.adapter = populartvshowadapter
+        _binding = FragTvshowBinding.inflate(inflater, container, false)
 
-
-
-        topRated_recycler = view.recycle_top_rated_tvshow
-        topRatedtvshowLayoutMgr =
-            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        topRatedtvshowAdapter = TvShowAdapter(mutableListOf()) { tvshow ->
-            showTvShowDetails(tvshow)
-        }
-        topRated_recycler.layoutManager = topRatedtvshowLayoutMgr
-        topRated_recycler.adapter = topRatedtvshowAdapter
-
-
-
-        onAir_recycler = view.recycle_onair_tvshow
-        onAirtvshowLayoutMgr = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        onAirtvshowAdapter = TvShowAdapter(mutableListOf()){tvshow ->
-            showTvShowDetails(tvshow)
-        }
-        onAir_recycler.layoutManager = onAirtvshowLayoutMgr
-        onAir_recycler.adapter = onAirtvshowAdapter
+        initRecyclerView()
 
         getPopularTvShows()
         getTopRatedTvShows()
         getOnAirTvShows()
 
 
-        return view
+        return binding.root
 
     }
 
+    private fun initRecyclerView() = with(binding) {
+
+        recyclePopularTvshow.apply {
+            adapter = TvShowAdapter(mutableListOf()) { tvshow ->
+                showTvShowDetails(tvshow)
+            }
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        }
+
+        recycleOnairTvshow.apply {
+            adapter = TvShowAdapter(mutableListOf()) { tvshow ->
+                showTvShowDetails(tvshow)
+            }
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        }
+        recycleTopRatedTvshow.apply {
+            adapter = TvShowAdapter(mutableListOf()) { tvshow ->
+                showTvShowDetails(tvshow)
+            }
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        }
+    }
+
     private fun showTvShowDetails(tvshow: TvShow) {
-        val intent = Intent(activity!!, TvShowDetail::class.java)
+        val intent = Intent(requireActivity(), TvShowDetail::class.java)
         intent.putExtra(TVSHOW_BACKDROP, tvshow.backdropPath)
         intent.putExtra(TVSHOW_POSTER, tvshow.posterPath)
         intent.putExtra(TVSHOW_NAME, tvshow.name)
         intent.putExtra(TVSHOW_RATING, tvshow.rating)
         intent.putExtra(TVSHOW_FIRSTAIRDATE, tvshow.first_air_date)
         intent.putExtra(TVSHOW_OVERVIEW, tvshow.overview)
-        intent.putExtra(TVSHOW_ID,tvshow.id)
+        intent.putExtra(TVSHOW_ID, tvshow.id)
 
         startActivity(intent)
     }
 
 
-
     private fun getPopularTvShows() {
-       TvShowRepository.getPopularTvShows(
+        TvShowRepository.getPopularTvShows(
             populartvshowPage,
             ::onPopularTvShowsFetched,
             ::onError
@@ -120,67 +107,72 @@ class TvShowFragment: Fragment() {
     }
 
     private fun attachPopularTvShowsOnScrollListener() {
-    popular_recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            val totalItemCount = populartvshowLayoutMgr.itemCount
-            val visibleItemCount = populartvshowLayoutMgr.childCount
-            val firstVisibleItem = populartvshowLayoutMgr.findFirstVisibleItemPosition()
+        binding.recyclePopularTvshow.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val totalItemCount = binding.recyclePopularTvshow.layoutManager?.itemCount
+                val visibleItemCount = binding.recyclePopularTvshow.layoutManager?.childCount
+                val firstVisibleItem =
+                    (binding.recyclePopularTvshow.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
 
-            if (firstVisibleItem + visibleItemCount == totalItemCount) {
-                recyclerView.removeOnScrollListener(this)
-                populartvshowPage++
-                getPopularTvShows()
+
+                if (firstVisibleItem + visibleItemCount!! == totalItemCount) {
+                    recyclerView.removeOnScrollListener(this)
+                    populartvshowPage++
+                    getPopularTvShows()
+                }
             }
-        }
-    })
-}
+        })
+    }
 
 
-private fun attachTopRatedTvShowsOnScrollListener() {
-    topRated_recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            val totalItemCount = topRatedtvshowLayoutMgr.itemCount
-            val visibleItemCount = topRatedtvshowLayoutMgr.childCount
-            val firstVisibleItem = topRatedtvshowLayoutMgr.findFirstVisibleItemPosition()
+    private fun attachTopRatedTvShowsOnScrollListener() {
+        binding.recycleTopRatedTvshow.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val totalItemCount = binding.recycleTopRatedTvshow.layoutManager?.itemCount
+                val visibleItemCount = binding.recycleTopRatedTvshow.layoutManager?.childCount
+                val firstVisibleItem =
+                    (binding.recycleTopRatedTvshow.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
 
-            if (firstVisibleItem + visibleItemCount == totalItemCount) {
-                recyclerView.removeOnScrollListener(this)
-                topRatedtvshowPage++
-                getTopRatedTvShows()
+                if (firstVisibleItem + visibleItemCount!! == totalItemCount) {
+                    recyclerView.removeOnScrollListener(this)
+                    topRatedtvshowPage++
+                    getTopRatedTvShows()
+                }
             }
-        }
-    })
-}
+        })
+    }
 
-private fun attachOnAirTvShowsOnScrollListener() {
-    onAir_recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            val totalItemCount = onAirtvshowLayoutMgr.itemCount
-            val visibleItemCount = onAirtvshowLayoutMgr.childCount
-            val firstVisibleItem = onAirtvshowLayoutMgr.findFirstVisibleItemPosition()
+    private fun attachOnAirTvShowsOnScrollListener() {
+        binding.recycleOnairTvshow.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val totalItemCount = binding.recycleOnairTvshow.layoutManager?.itemCount
+                val visibleItemCount = binding.recycleOnairTvshow.layoutManager?.childCount
+                val firstVisibleItem =
+                    (binding.recycleOnairTvshow.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
 
-            if (firstVisibleItem + visibleItemCount == totalItemCount) {
-                recyclerView.removeOnScrollListener(this)
-                onAirtvshowPage++
-                getOnAirTvShows()
+                if (firstVisibleItem + visibleItemCount!! == totalItemCount) {
+                    recyclerView.removeOnScrollListener(this)
+                    onAirtvshowPage++
+                    getOnAirTvShows()
+                }
             }
-        }
-    })
+        })
 
 
-}
+    }
+
     private fun onPopularTvShowsFetched(tvshow: MutableList<TvShow>) {
-        populartvshowadapter.appendTvShows(tvshow)
+        (binding.recyclePopularTvshow.adapter as TvShowAdapter).appendTvShows(tvshow)
         attachPopularTvShowsOnScrollListener()
     }
 
     private fun onTopRatedTvShowsFetched(tvshow: MutableList<TvShow>) {
-        topRatedtvshowAdapter.appendTvShows(tvshow)
+        (binding.recycleTopRatedTvshow.adapter as TvShowAdapter).appendTvShows(tvshow)
         attachTopRatedTvShowsOnScrollListener()
     }
 
     private fun OnAirTvShowsFetched(tvshow: MutableList<TvShow>) {
-        onAirtvshowAdapter.appendTvShows(tvshow)
+        (binding.recycleOnairTvshow.adapter as TvShowAdapter).appendTvShows(tvshow)
         attachOnAirTvShowsOnScrollListener()
     }
 
