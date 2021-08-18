@@ -14,11 +14,17 @@ import com.example.movieapp.databinding.FragMovieBinding
 import com.example.movieapp.model.movie.Movie
 import com.example.movieapp.model.movie.MovieAdapter
 import com.example.movieapp.model.movie.MovieRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 class MovieFragment : Fragment() {
 
     private var _binding: FragMovieBinding? = null
     private val binding get() = _binding!!
+
+    private val scope = CoroutineScope(Main)
 
     private var popularMoviesPage = 1
     private var topRatedMoviesPage = 1
@@ -81,30 +87,37 @@ class MovieFragment : Fragment() {
     }
 
     private fun getUpcomingMovies() {
-        MovieRepository.getUpcomingMovies(
-            upComingMoviesPage,
-            ::onUpComingMoviesFetched,
-            ::onError
-        )
+        scope.launch {
+            MovieRepository.getUpcomingMovies(
+                upComingMoviesPage,
+                ::onUpComingMoviesFetched,
+                ::onError
+            )
+        }
 
     }
 
 
     private fun getTopRatedMovies() {
-        MovieRepository.getTopRatedMovies(
-            topRatedMoviesPage,
-            ::onTopRatedMoviesFetched,
-            ::onError
-        )
+        scope.launch {
+            MovieRepository.getTopRatedMovies(
+                topRatedMoviesPage,
+                ::onTopRatedMoviesFetched,
+                ::onError
+            )
+        }
 
     }
 
     private fun getPopularMovies() {
-        MovieRepository.getPopularMovies(
-            popularMoviesPage,
-            ::onPopularMoviesFetched,
-            ::onError
-        )
+        scope.launch {
+            MovieRepository.getPopularMovies(
+                popularMoviesPage,
+                ::onPopularMoviesFetched,
+                ::onError
+            )
+        }
+
     }
 
     private fun attachPopularMoviesOnScrollListener() {

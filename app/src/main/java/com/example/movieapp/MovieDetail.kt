@@ -11,6 +11,9 @@ import com.example.movieapp.model.movie.Video
 import com.google.android.youtube.player.YouTubeBaseActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 const val MOVIE_BACKDROP = "extra_movie_backdrop"
 const val MOVIE_POSTER = "extra_movie_poster"
@@ -26,6 +29,8 @@ class MovieDetail : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener {
     lateinit var binding: ActivityMovieDetailBinding
 
     private lateinit var VIDEO_ID: String
+
+    private val scope = CoroutineScope(Dispatchers.Main)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +69,10 @@ class MovieDetail : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener {
         binding.movieReleaseDate.text = extras.getString(MOVIE_RELEASE_DATE, "")
         binding.movieOverview.text = extras.getString(MOVIE_OVERVIEW, "")
         val MOVIE_ID = extras.getLong(MOVIE_ID)
-        getVideo(MOVIE_ID, onSuccess = ::onVideosFetched, onError = ::onError)
+
+        scope.launch {
+            getVideo(MOVIE_ID, onSuccess = ::onVideosFetched, onError = ::onError)
+        }
     }
 
     private fun onVideosFetched(video: List<Video>) {
