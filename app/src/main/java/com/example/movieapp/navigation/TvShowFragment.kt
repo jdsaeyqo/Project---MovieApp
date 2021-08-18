@@ -24,6 +24,8 @@ class TvShowFragment : Fragment() {
     private var topRatedtvshowPage = 1
     private var onAirtvshowPage = 1
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
