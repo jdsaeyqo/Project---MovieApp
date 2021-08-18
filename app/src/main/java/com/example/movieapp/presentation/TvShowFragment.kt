@@ -1,4 +1,4 @@
-package com.example.movieapp.navigation
+package com.example.movieapp.presentation
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,19 +12,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.*
 import com.example.movieapp.databinding.FragTvshowBinding
 import com.example.movieapp.model.tvshow.TvShow
-import com.example.movieapp.model.tvshow.TvShowAdapter
-import com.example.movieapp.model.tvshow.TvShowRepository
+import com.example.movieapp.adapter.TvShowAdapter
+import com.example.movieapp.service.tvshow.TvShowRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
 
 class TvShowFragment : Fragment() {
 
     private var _binding: FragTvshowBinding? = null
     private val binding get() = _binding!!
 
+    private val scope = CoroutineScope(Main)
+
     private var populartvshowPage = 1
     private var topRatedtvshowPage = 1
     private var onAirtvshowPage = 1
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -83,28 +86,38 @@ class TvShowFragment : Fragment() {
 
 
     private fun getPopularTvShows() {
-        TvShowRepository.getPopularTvShows(
-            populartvshowPage,
-            ::onPopularTvShowsFetched,
-            ::onError
-        )
+
+        scope.launch {
+            TvShowRepository.getPopularTvShows(
+                populartvshowPage,
+                ::onPopularTvShowsFetched,
+                ::onError
+            )
+        }
+
     }
 
     private fun getTopRatedTvShows() {
-        TvShowRepository.getTopRatedTvShow(
-            topRatedtvshowPage,
-            ::onTopRatedTvShowsFetched,
-            ::onError
-        )
+        scope.launch {
+            TvShowRepository.getTopRatedTvShow(
+                topRatedtvshowPage,
+                ::onTopRatedTvShowsFetched,
+                ::onError
+            )
+        }
+
 
     }
 
     private fun getOnAirTvShows() {
-        TvShowRepository.getOnAirTvShow(
-            onAirtvshowPage,
-            ::OnAirTvShowsFetched,
-            ::onError
-        )
+        scope.launch {
+            TvShowRepository.getOnAirTvShow(
+                onAirtvshowPage,
+                ::OnAirTvShowsFetched,
+                ::onError
+            )
+        }
+
 
     }
 
