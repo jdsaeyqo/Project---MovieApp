@@ -1,4 +1,4 @@
-package com.example.movieapp
+package com.example.movieapp.presentation
 
 import android.os.Bundle
 import android.view.View
@@ -6,7 +6,7 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.example.movieapp.databinding.ActivityMovieDetailBinding
-import com.example.movieapp.model.movie.MovieRepository.getVideo
+import com.example.movieapp.service.movie.MovieRepository.getVideo
 import com.example.movieapp.model.movie.Video
 import com.google.android.youtube.player.YouTubeBaseActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
@@ -109,7 +109,7 @@ class MovieDetail : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener {
         if (p1!!.isUserRecoverableError) {
             p1.getErrorDialog(this, 1).show()
         } else {
-            Toast.makeText(this, "초기화 실패" + p1.toString(), Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "초기화 실패$p1", Toast.LENGTH_LONG).show()
         }
     }
 }

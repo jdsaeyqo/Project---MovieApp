@@ -1,7 +1,8 @@
-package com.example.movieapp.model.movie
+package com.example.movieapp.service.movie
 
 
-import retrofit2.Call
+import com.example.movieapp.model.movie.GetMoviesResponse
+import com.example.movieapp.model.movie.GetVideoResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

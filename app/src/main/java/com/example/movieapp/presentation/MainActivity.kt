@@ -1,11 +1,10 @@
-package com.example.movieapp
+package com.example.movieapp.presentation
 
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import com.example.movieapp.R
 import com.example.movieapp.databinding.ActivityMainBinding
-import com.example.movieapp.navigation.MovieFragment
-import com.example.movieapp.navigation.TvShowFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {

@@ -18,9 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat">
 
-        <activity android:name=".TvShowDetail"/>
-        <activity android:name=".MovieDetail" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".presentation.TvShowDetail"/>
+        <activity android:name=".presentation.MovieDetail" />
+        <activity android:name=".presentation.MainActivity">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 

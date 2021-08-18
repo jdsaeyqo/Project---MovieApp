@@ -1,4 +1,4 @@
-package com.example.movieapp.navigation
+package com.example.movieapp.presentation
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,11 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.*
 import com.example.movieapp.databinding.FragMovieBinding
 import com.example.movieapp.model.movie.Movie
-import com.example.movieapp.model.movie.MovieAdapter
-import com.example.movieapp.model.movie.MovieRepository
+import com.example.movieapp.adapter.MovieAdapter
+import com.example.movieapp.service.movie.MovieRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 class MovieFragment : Fragment() {
