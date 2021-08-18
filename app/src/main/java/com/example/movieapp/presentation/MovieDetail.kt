@@ -1,19 +1,19 @@
-package com.example.movieapp
+package com.example.movieapp.presentation
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
-import android.widget.RatingBar
-import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.example.movieapp.databinding.ActivityMovieDetailBinding
-import com.example.movieapp.model.movie.MovieRepository.getVideo
+import com.example.movieapp.service.movie.MovieRepository.getVideo
 import com.example.movieapp.model.movie.Video
 import com.google.android.youtube.player.YouTubeBaseActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 const val MOVIE_BACKDROP = "extra_movie_backdrop"
 const val MOVIE_POSTER = "extra_movie_poster"
@@ -29,6 +29,8 @@ class MovieDetail : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener {
     lateinit var binding: ActivityMovieDetailBinding
 
     private lateinit var VIDEO_ID: String
+
+    private val scope = CoroutineScope(Dispatchers.Main)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,7 +69,10 @@ class MovieDetail : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener {
         binding.movieReleaseDate.text = extras.getString(MOVIE_RELEASE_DATE, "")
         binding.movieOverview.text = extras.getString(MOVIE_OVERVIEW, "")
         val MOVIE_ID = extras.getLong(MOVIE_ID)
-        getVideo(MOVIE_ID, onSuccess = ::onVideosFetched, onError = ::onError)
+
+        scope.launch {
+            getVideo(MOVIE_ID, onSuccess = ::onVideosFetched, onError = ::onError)
+        }
     }
 
     private fun onVideosFetched(video: List<Video>) {
@@ -104,7 +109,7 @@ class MovieDetail : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener {
         if (p1!!.isUserRecoverableError) {
             p1.getErrorDialog(this, 1).show()
         } else {
-            Toast.makeText(this, "초기화 실패" + p1.toString(), Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "초기화 실패$p1", Toast.LENGTH_LONG).show()
         }
     }
 }

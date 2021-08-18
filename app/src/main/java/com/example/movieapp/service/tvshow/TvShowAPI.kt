@@ -1,43 +1,45 @@
-package com.example.movieapp.model.tvshow
+package com.example.movieapp.service.tvshow
 
 
 
-import retrofit2.Call
+import com.example.movieapp.model.tvshow.GetTvShowResponse
+import com.example.movieapp.model.tvshow.GetVideoResponse
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface TvShowAPI {
     @GET("tv/popular")
-    fun getPopularTvShows(
+    suspend fun getPopularTvShows(
         @Query("api_key") apiKey :String = "ee2b86b7b047fd828cc1c8353abb6114",
         @Query("page") page : Int,
         @Query("language") language : String = "ko"
 
-    ) : Call<GetTvShowResponse>
+    ) : Response<GetTvShowResponse>
 
     @GET("tv/top_rated")
-    fun getTopRatedTvShows(
+    suspend fun getTopRatedTvShows(
         @Query("api_key") apiKey :String = "ee2b86b7b047fd828cc1c8353abb6114",
         @Query("page") page : Int,
         @Query("language") language : String = "ko"
 
-    ): Call<GetTvShowResponse>
+    ): Response<GetTvShowResponse>
 
     @GET("tv/on_the_air")
-    fun getOnAirTvShows(
+    suspend fun getOnAirTvShows(
         @Query("api_key") apiKey :String = "ee2b86b7b047fd828cc1c8353abb6114",
         @Query("page") page : Int,
         @Query("language") language : String = "ko"
 
-    ): Call<GetTvShowResponse>
+    ): Response<GetTvShowResponse>
 }
 
 interface VideoAPI{
     @GET("tv/{tv_id}/videos")
-    fun getVideoTrailer(
+    suspend fun getVideoTrailer(
         @Path("tv_id") TvShowID: Long, //선택된 tv id
         @Query("api_key") apiKey: String = "ee2b86b7b047fd828cc1c8353abb6114",
         @Query("language") language : String = "en"
-    ): Call<GetVideoResponse>
+    ): Response<GetVideoResponse>
 }

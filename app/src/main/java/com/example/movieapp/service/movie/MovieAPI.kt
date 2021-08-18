@@ -1,7 +1,9 @@
-package com.example.movieapp.model.movie
+package com.example.movieapp.service.movie
 
 
-import retrofit2.Call
+import com.example.movieapp.model.movie.GetMoviesResponse
+import com.example.movieapp.model.movie.GetVideoResponse
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -9,37 +11,37 @@ import retrofit2.http.Query
 interface MovieAPI {
 
     @GET("movie/popular")
-    fun getPopularMovies(
+    suspend fun getPopularMovies(
         @Query("api_key") apiKey :String = "ee2b86b7b047fd828cc1c8353abb6114" ,
         @Query("page") page : Int,
         @Query("language") language : String = "ko"
 
-    ) : Call<GetMoviesResponse>
+    ) : Response<GetMoviesResponse>
 
     @GET("movie/top_rated")
-    fun getTopRatedMovies(
+    suspend fun getTopRatedMovies(
         @Query("api_key") apiKey :String = "ee2b86b7b047fd828cc1c8353abb6114" ,
         @Query("page") page : Int,
         @Query("language") language : String = "ko"
 
-    ): Call<GetMoviesResponse>
+    ): Response<GetMoviesResponse>
 
     @GET("movie/upcoming")
-    fun getUpcomingMovies(
+    suspend fun getUpcomingMovies(
         @Query("api_key") apiKey :String = "ee2b86b7b047fd828cc1c8353abb6114" ,
         @Query("page") page : Int,
         @Query("language") language : String = "ko"
 
-    ): Call<GetMoviesResponse>
+    ): Response<GetMoviesResponse>
 
 
 }
 
 interface VideoAPI{
     @GET("movie/{movie_id}/videos")
-    fun getVideoTrailer(
+    suspend fun getVideoTrailer(
         @Path("movie_id") movieID: Long, //선택된 movie id
         @Query("api_key") apiKey: String = "ee2b86b7b047fd828cc1c8353abb6114",
         @Query("language") language : String = "en"
-    ): Call<GetVideoResponse>
+    ): Response<GetVideoResponse>
 }

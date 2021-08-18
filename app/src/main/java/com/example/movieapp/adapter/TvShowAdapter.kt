@@ -1,4 +1,4 @@
-package com.example.movieapp.model.tvshow
+package com.example.movieapp.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.example.movieapp.databinding.ItemTvshowBinding
+import com.example.movieapp.model.tvshow.TvShow
 
 class TvShowAdapter(
     var tvshows: MutableList<TvShow>, private var onTvshowClick: (tvshow: TvShow) -> Unit
@@ -15,7 +16,7 @@ class TvShowAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): TvShowAdapter.TvShowViewHolder {
+    ): TvShowViewHolder {
 
         val view = ItemTvshowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return TvShowViewHolder(view)
@@ -26,7 +27,7 @@ class TvShowAdapter(
         return tvshows.size
     }
 
-    override fun onBindViewHolder(holder: TvShowAdapter.TvShowViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TvShowViewHolder, position: Int) {
         holder.bind(tvshows[position])
     }
 

@@ -1,4 +1,4 @@
-package com.example.movieapp.model.movie
+package com.example.movieapp.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.example.movieapp.databinding.ItemMovieBinding
+import com.example.movieapp.model.movie.Movie
 
 class MovieAdapter(
     var movies: MutableList<Movie>, private var onMovieClick: (movie: Movie) -> Unit
