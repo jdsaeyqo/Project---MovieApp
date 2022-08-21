@@ -12,7 +12,7 @@ interface MovieAPI {
 
     @GET("movie/popular")
     suspend fun getPopularMovies(
-        @Query("api_key") apiKey :String = "ee2b86b7b047fd828cc1c8353abb6114" ,
+        @Query("api_key") apiKey :String = "1619850e39c4aaaa53c03843c119e4af" ,
         @Query("page") page : Int,
         @Query("language") language : String = "ko"
 
@@ -20,7 +20,7 @@ interface MovieAPI {
 
     @GET("movie/top_rated")
     suspend fun getTopRatedMovies(
-        @Query("api_key") apiKey :String = "ee2b86b7b047fd828cc1c8353abb6114" ,
+        @Query("api_key") apiKey :String = "1619850e39c4aaaa53c03843c119e4af" ,
         @Query("page") page : Int,
         @Query("language") language : String = "ko"
 
@@ -28,7 +28,7 @@ interface MovieAPI {
 
     @GET("movie/upcoming")
     suspend fun getUpcomingMovies(
-        @Query("api_key") apiKey :String = "ee2b86b7b047fd828cc1c8353abb6114" ,
+        @Query("api_key") apiKey :String = "1619850e39c4aaaa53c03843c119e4af" ,
         @Query("page") page : Int,
         @Query("language") language : String = "ko"
 
@@ -41,7 +41,7 @@ interface VideoAPI{
     @GET("movie/{movie_id}/videos")
     suspend fun getVideoTrailer(
         @Path("movie_id") movieID: Long, //선택된 movie id
-        @Query("api_key") apiKey: String = "ee2b86b7b047fd828cc1c8353abb6114",
+        @Query("api_key") apiKey: String = "1619850e39c4aaaa53c03843c119e4af",
         @Query("language") language : String = "en"
     ): Response<GetVideoResponse>
 }

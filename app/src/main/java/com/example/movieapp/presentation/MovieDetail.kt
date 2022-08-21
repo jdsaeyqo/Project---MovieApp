@@ -79,7 +79,6 @@ class MovieDetail : YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener {
         VIDEO_ID = video[0].video_key
         binding.movieBackdrop.visibility = View.GONE
 
-
         binding.ytPlayer.initialize("AIzaSyD6krj8VZgysv89-hLmGKSa8s_haSYcxAg", this)
 
     }

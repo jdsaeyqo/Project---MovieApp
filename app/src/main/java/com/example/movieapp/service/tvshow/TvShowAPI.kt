@@ -12,7 +12,7 @@ import retrofit2.http.Query
 interface TvShowAPI {
     @GET("tv/popular")
     suspend fun getPopularTvShows(
-        @Query("api_key") apiKey :String = "ee2b86b7b047fd828cc1c8353abb6114",
+        @Query("api_key") apiKey :String = "1619850e39c4aaaa53c03843c119e4af",
         @Query("page") page : Int,
         @Query("language") language : String = "ko"
 
@@ -20,7 +20,7 @@ interface TvShowAPI {
 
     @GET("tv/top_rated")
     suspend fun getTopRatedTvShows(
-        @Query("api_key") apiKey :String = "ee2b86b7b047fd828cc1c8353abb6114",
+        @Query("api_key") apiKey :String = "1619850e39c4aaaa53c03843c119e4af",
         @Query("page") page : Int,
         @Query("language") language : String = "ko"
 
@@ -28,7 +28,7 @@ interface TvShowAPI {
 
     @GET("tv/on_the_air")
     suspend fun getOnAirTvShows(
-        @Query("api_key") apiKey :String = "ee2b86b7b047fd828cc1c8353abb6114",
+        @Query("api_key") apiKey :String = "1619850e39c4aaaa53c03843c119e4af",
         @Query("page") page : Int,
         @Query("language") language : String = "ko"
 
@@ -39,7 +39,7 @@ interface VideoAPI{
     @GET("tv/{tv_id}/videos")
     suspend fun getVideoTrailer(
         @Path("tv_id") TvShowID: Long, //선택된 tv id
-        @Query("api_key") apiKey: String = "ee2b86b7b047fd828cc1c8353abb6114",
+        @Query("api_key") apiKey: String = "1619850e39c4aaaa53c03843c119e4af",
         @Query("language") language : String = "en"
     ): Response<GetVideoResponse>
 }
